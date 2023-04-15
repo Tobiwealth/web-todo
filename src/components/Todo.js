@@ -18,11 +18,11 @@ const Todo = ({todo, text}) => {
 	}
 
 	return (
-		<div className="flex w-full p-16 pt-0 pb-0 justify-center items-center">
+		<div className="flex w-full p-10 pt-0 pb-0 justify-center items-center">
 			<div className={ dark ? 
-			    "flex w-full h-18 p-10 pt-4 pb-4 justify-between rounded-lg border-b-2 items-center bg-veryy-dark-grayish-blue border-very-dark-grayish-blue"
+			    "flex w-full h-18 p-6 pt-2 pb-2 justify-between rounded-lg border-b-2 items-center bg-veryy-dark-grayish-blue border-very-dark-grayish-blue"
 			        :
-			            " flex w-full h-18 p-10 pt-4 pb-4 justify-between rounded-lg border-b-2 bg-white items-center"}
+			            " flex w-full h-18 p-6 pt-2 pb-2 justify-between rounded-lg border-b-2 bg-white items-center"}
 			>
 			    <div onClick={handleComplete} className={dark ? todo.completed? "border-0":
 			        "w-6 h-6 border-2 cursor-pointer border-very-light-rayish-blue rounded-full bg-check-background border-very-dark-grayish-bluee hover:border-dark-grayish-blue "
