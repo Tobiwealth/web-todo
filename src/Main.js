@@ -4,9 +4,8 @@ import {useSelector} from 'react-redux';
 
 const Main = () => {
 	const dark = useSelector((state) => state.darkMode.darkmode)
-
 	return (
-		<div className={dark ? "h-screen bg-very-dark-desaturated-blue" :"h-screen bg-very-light-ray"}>
+		<div className={dark ? "h-screen bg-very-dark-desaturated-blue overflow-scroll" :"h-screen bg-very-light-ray"}>
 			<TodoList/>
 		</div>
 	)

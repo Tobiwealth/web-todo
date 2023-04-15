@@ -3,51 +3,58 @@ import {createSlice} from '@reduxjs/toolkit';
 const todoSlice = createSlice({
 	name: "todo",
 	initialState: {
-		todos: []
+		todos: [],
+		newTodo: [],
+		counter: 0
 	},
 	reducers: {
 		addTodo(state,action){
 			const text = action.payload;
-			state.todos.push({
-				id:Math.random()*100000,
+			state.todos.unshift({
+				id:Math.random()*100000000,
 				task: text,
-				completed: false
+				completed: false,
 		    })
+		    state.newTodo = state.todos;
 		},
 		completeTodo(state,action){
-			const newId = action.payload;
-			state.todos.map((item) => {
-				if (item.id === newId){
-					return{...item, completed: !item.completed}
+			const id = action.payload;
+			state.todos = state.todos.map((item) => {
+				if (item.id === id){
+					return{...item, completed:!item.completed}
 				}
 				return item;
 		    })
+		    state.newTodo = state.todos;
 		},
 		deleteTodo(state, action){
-			const newId = action.payload;
-			state.todos.filter((item) => 
-				item.id !== newId
+			const id = action.payload;
+			state.todos = state.todos.filter(item => 
+				item.id !== id
 			)
+			state.newTodo = state.todos;
 		},
 		countTodo(state){
-			state.todos.forEach((counter) =>
-				counter++
-			)
+			state.counter = state.todos.length;
 		},
-		clearCompleteTodo(state){
-			state.todos.filter((item) =>
-				item.completed === false
-			)
+		setAllTodo(state){
+			state.newTodo = state.todos
 		},
 		setCompleteTodo(state){
-			const newTodo = state.todos.filter((item) =>
+			state.newTodo = state.todos.filter((item) =>
 				item.completed === true
 			)
 		},
 		setActiveTodo(state){
-			const newTodo = state.todos.filter((item) =>
+			state.newTodo = state.todos.filter((item) =>
 				item.completed === false
 			)
+		},
+		clearCompleteTodo(state){
+			state.todos = state.todos.filter((item) => 
+				item.completed === false
+			)
+			state.newTodo = state.todos;
 		}
 	}
 })
