@@ -20,6 +20,8 @@ module.exports = {
         "dark-grayish-blue": "hsl(234, 11%, 52%)",
         "very-dark-grayish-blue": "hsl(233, 14%, 35%)",
         "veryy-dark-grayish-blue": "hsl(237, 14%, 26%)",
+        "firebrick": "firebrick",
+        'faint-black': 'rgba(96, 98, 104, 1)',
       },
       backgroundImage: {
         'dark-hero-dt':"url('../public/img/bg-desktop-dark.jpg')",
@@ -35,6 +37,8 @@ module.exports = {
       },
       height: {
         "88": "22rem",
+        "98" : "30rem",
+        "100": "38rem"
       },
       letterSpacing: {
         'overwide': '0.4em'
