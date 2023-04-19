@@ -2,50 +2,90 @@ import React, {useState, useEffect} from 'react';
 import Todo from './Todo';
 import iconmoon from '../images/iconmoon.svg';
 import iconsun from '../images/iconsun.svg';
+import {auth, db} from '../config/Firebase';
+import {addDoc, getDocs, collection,doc, deleteDoc} from 'firebase/firestore';
 import {useSelector, useDispatch} from 'react-redux';
 import {darkModeActions} from '../store/darkModeSlice';
-import {todoActions} from '../store/todoSlice';
+
 
 const TodoList = () => {
-	const [inputText, setInputText] = useState("");
 	const darkMode = useSelector((state) => state.darkMode.darkmode);
-	const todo = useSelector((state) => state.todo.newTodo);
-	const count = useSelector((state) => state.todo.counter);
 	const dispatch = useDispatch();
+	const [inputText, setInputText] = useState("");
+	const [todo, setTodo] = useState([]);
+	const [count, setCount] = useState(0);
+	//const [user, setUser] = useState([]);
+	const email = localStorage.getItem("email");
+	const todoCollectionRef = collection(db,`${email}`);
 
-	const handleSubmit = (e) => {
+
+	
+
+    const sendRequest = async () => {
+	    await addDoc(todoCollectionRef,
+            {
+				task: inputText,
+				completed: false,
+				userId: auth.currentUser.uid,
+            }
+	    );
+	}
+
+	const handleSubmit = async (e) => {
 		const task = inputText;
 		if(task === ""){
 			return
 		}
 		if(e.key === "Enter" || e.keyCode === 13){
-		    dispatch(todoActions.addTodo(task));
-		    setInputText("");
-		    dispatch(todoActions.countTodo());
+		    await sendRequest();
+		    setInputText(""); 
 	    }
 	}
     const handleDarkMode = () =>{
 		dispatch(darkModeActions.setDarkMode());
-		console.log("moon-togglr:", darkMode);
     }
     const handleLightMode = () =>{
 		dispatch(darkModeActions.setLightMode())
-		console.log("sun:", darkMode);
     }
     const handleClearCompleteTodo = () => {
-    	dispatch(todoActions.clearCompleteTodo());
-    	dispatch(todoActions.countTodo());
+    	const filterId = todo.filter((item)=> item.completed === true);
+    	filterId.map((item) => {
+    		const todoDoc = doc(db, `${auth.currentUser.email}`, item.id );
+    		return deleteDoc(todoDoc);
+    	})
     }
     const handleAll = () => {
-    	dispatch(todoActions.setAllTodo());
+    	return todo;
     }
     const handleCompleted = () => {
-    	dispatch(todoActions.setCompleteTodo());
+    	setTodo(todo.filter((item) => item.completed === true));
     }
     const handleActive = () => {
-    	dispatch(todoActions.setActiveTodo());
+    	setTodo(todo.filter((item) => item.completed === false));
+    }
+   const fetchData = async () => {
+    	try{
+			const todo = await getDocs(todoCollectionRef);
+			setTodo(todo.docs.map((doc)=> ({
+				...doc.data(), id:doc.id
+			})))
+
+		}catch(e){
+			console.error(e);
+		}
     }
 
+    const handleCounter = () => {
+    	setCount(todo.length);
+    }
+    useEffect(() => {
+        fetchData();
+    }, [todo]);
+
+    useEffect(() => {
+        handleCounter();
+    }, [todo]);
+  
 	return (
 		<div className={!darkMode ? 
 		    "flex justify-center items-center w-full bg-cover h-88 bg-light-hero-mb ds:bg-light-hero-dt" 
@@ -54,6 +94,9 @@ const TodoList = () => {
 		    }
 		>
 			<div className=" h-4/5 p-0 w-full max-w-screen-lg flex flex-col items-start rounded-lg">
+			    <div className="p-2 pl-12"> 
+			        <div className="text-white text-xl">welcome, <span className="font-bold tracking-wide text-3xl">{auth.currentUser.displayName}</span></div>
+			    </div>
 			    <div className="w-full mb-10 p-12 pt-2 pb-6 flex justify-between items-center">
 			        <h1 className="text-5xl text-white font-bold tracking-overwide">TODO</h1>
 			        { darkMode && <div className="cursor-pointer" onClick={handleLightMode}><img src={iconsun} alt="sun"/></div>} 
@@ -69,7 +112,10 @@ const TodoList = () => {
 			        />
 			    </div>
 			    {
-			    	todo.map((item,i) => <Todo key={i} todo={item} text={item.task}/>)
+			    	todo.map((item,i) => 
+			    		//if(item.userId){ 
+			    		<Todo key={i} setTodos={setTodo} todos={todo} todo={item} text={item.task}/>
+			    	)
 			    }
 			    <div className="flex justify-center mt-0 items-center w-full p-10 pt-0 pb-6 ds:hidden">
 			        <div className={ darkMode ? 

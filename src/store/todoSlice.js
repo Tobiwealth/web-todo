@@ -1,4 +1,10 @@
 import {createSlice} from '@reduxjs/toolkit';
+import {db} from '../config/Firebase';
+import {getDocs,collection} from 'firebase/firestore';
+
+
+const todoCollectionRef = collection(db,"Todos");
+
 
 const todoSlice = createSlice({
 	name: "todo",
@@ -9,13 +15,10 @@ const todoSlice = createSlice({
 	},
 	reducers: {
 		addTodo(state,action){
-			const text = action.payload;
-			state.todos.unshift({
-				id:Math.random()*100000000,
-				task: text,
-				completed: false,
-		    })
+			const arrivedTodo = action.payload;
+			state.todos.unshift(arrivedTodo);
 		    state.newTodo = state.todos;
+		    console.log(state.todos.id)
 		},
 		completeTodo(state,action){
 			const id = action.payload;
@@ -59,5 +62,23 @@ const todoSlice = createSlice({
 	}
 })
 
+export const fetchData = () => {
+	return async (dispatch) => {
+//		const fetchTodos = async () => {
+//			
+//		}
+		try{
+			const todo = await getDocs(todoCollectionRef);
+			todo.docs.map((doc) => {
+				dispatch(todoActions.addTodo(doc.data()));
+				console.log(doc.data())
+			});
+			//console.log(todo.docs[0].data());
+			console.log("todos succedd");
+		}catch(e){
+			console.error(e);
+		}
+	}
+}
 export const todoActions = todoSlice.actions;
 export default todoSlice;
