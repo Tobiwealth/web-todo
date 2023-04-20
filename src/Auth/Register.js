@@ -108,7 +108,7 @@ const Register = () => {
 				        Register
 				    </button>
 				</div>
-				<div className="mb-6"><Link to="/login">already have an accounter ?</Link></div>
+				<div className="mb-6"><Link to="/login">already have an account ?</Link></div>
 				<div><p>&copy;TobiWealth</p></div>
 			</div>	
 		</div>
