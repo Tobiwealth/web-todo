@@ -36,10 +36,10 @@ const Todo = ({todo, text, setTodos, todos}) => {
 			            <img className="w-full h-full" src={iconcheck} alt="checked"/>
 			        </div>
 			    </div>
-			    <div className= {darkMode ? todo.completed ? "line-through text-dark-grayish-blue font-josefin-sans font-normal text-2xl":
-			    	"text-light-grayish-blue font-josefin-sans font-normal text-2xl"
-			    	    : todo.completed ? "line-through font-josefin-sans font-normal text-2xl text-light-grayish-blue" :
-			    	        "font-josefin-sans font-normal text-2xl text-very-dark-grayish-bluee"}
+			    <div className= {darkMode ? todo.completed ? "line-through text-dark-grayish-blue font-josefin-sans text-base font-normal ds:text-2xl":
+			    	"text-light-grayish-blue font-josefin-sans font-normal text-base ds:text-2xl"
+			    	    : todo.completed ? "line-through font-josefin-sans font-normal text-base ds:text-2xl text-light-grayish-blue" :
+			    	        "font-josefin-sans font-normal ds:text-2xl text-base text-very-dark-grayish-bluee"}
 			    >{text}</div>
 			    <img onClick={() => handleDelete(todo.id)} className=" cursor-pointer w-6 h-6" src={iconcross} alt="times"/>
 			</div>
