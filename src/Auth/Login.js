@@ -8,6 +8,14 @@ const Login = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [errorMessage,setErrorMessage] = useState("");
+	const handlePassword = (e) => {
+		setPassword(e.target.value);
+		setErrorMessage("");
+	}
+	const handleEmail = (e) => {
+		setEmail(e.target.value);
+		setErrorMessage("");
+	}
 
 	const handleLogin = async () => {
 		try{
@@ -36,7 +44,7 @@ const Login = () => {
 						    className="w-72 h-8 border-2 rounded-3xl p-2" 
 						    type="text" id="email" 
 						    placeholder="Enter your email"
-						    onChange={(e) => setEmail(e.target.value)}
+						    onChange={handleEmail}
 						    value={email}
 						/>
 					</div>
@@ -46,7 +54,7 @@ const Login = () => {
 						    className="w-72 h-8 border-2 rounded-3xl p-2" 
 						    type="password" id="password" 
 						    placeholder="Enter password"
-						    onChange={(e) => setPassword(e.target.value)}
+						    onChange={handlePassword}
 						    value={password}
 						/>
 					</div>

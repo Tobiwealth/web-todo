@@ -13,6 +13,23 @@ const Register = () => {
 	const [errorMessage,setErrorMessage] = useState("");
 	//const userCollectionRef = collection(db,'userList');
 
+	const handleEmail = (e) => {
+		setEmail(e.target.value);
+		setErrorMessage("");
+	}
+	const handlePassword = (e) => {
+		setPassword(e.target.value);
+		setErrorMessage("");
+	}
+	const handleConfirmPassword = (e) => {
+		setConfirmPassword(e.target.value);
+		setErrorMessage("");
+	}
+	const handleDisplayName = (e) => {
+		setDisplayName(e.target.value);
+		setErrorMessage("");
+	}
+
 	
 
 	
@@ -47,7 +64,7 @@ const Register = () => {
 						    className="w-72 h-8 border-2 rounded-3xl p-2" 
 						    type="text" id="email" 
 						    placeholder="Enter your email"
-						    onChange={(e) => setEmail(e.target.value)}
+						    onChange={handleEmail}
 						    value={email}
 						/>
 					</div>
@@ -57,7 +74,7 @@ const Register = () => {
 						    className="w-72 h-8 border-2 rounded-3xl p-2" 
 						    type="text" id="displayName" 
 						    placeholder="Enter a Username of your choice"
-						    onChange={(e) => setDisplayName(e.target.value)}
+						    onChange={handleDisplayName}
 						    value={displayName}
 						/>
 					</div>
@@ -67,7 +84,7 @@ const Register = () => {
 						    className="w-72 h-8 border-2 rounded-3xl p-2" 
 						    type="password" id="password" 
 						    placeholder="Enter password"
-						    onChange={(e) => setPassword(e.target.value)}
+						    onChange={handlePassword}
 						    value={password}
 						/>
 					</div>
@@ -77,7 +94,7 @@ const Register = () => {
 						    className="w-72 h-8 border-2 rounded-3xl p-2" 
 						    type="password" id="confirm_password" 
 						    placeholder="Enter password again"
-						    onChange={(e) => setConfirmPassword(e.target.value)}
+						    onChange={handleConfirmPassword}
 						    value={confirmPassword}
 						/>
 					</div>

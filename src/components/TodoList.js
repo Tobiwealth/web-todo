@@ -95,7 +95,7 @@ const TodoList = () => {
 		>
 			<div className=" h-4/5 p-0 w-full max-w-screen-lg flex flex-col items-start rounded-lg">
 			    <div className="p-2 pl-12"> 
-			        <div className="text-white text-xl">welcome, <span className="font-bold tracking-wide text-3xl">{auth.currentUser.displayName}</span></div>
+			        <div className="text-white text-xl">welcome, <span className="font-bold text-3xl">{auth.currentUser.displayName}</span></div>
 			    </div>
 			    <div className="w-full mb-10 p-12 pt-2 pb-6 flex justify-between items-center">
 			        <h1 className="text-5xl text-white font-bold tracking-overwide">TODO</h1>
@@ -104,9 +104,9 @@ const TodoList = () => {
 			    </div>
 			    <div className="w-full mb-20 flex justify-center items-center p-12 pt-0 pb-0">
 			        <input className={darkMode ?
-			            "border-6 w-full h-14 p-8 pt-2 pb-2 text-3xl text-center rounded-lg text-light-grayish-blue bg-veryy-dark-grayish-blue border-dark-grayish-blue"
+			            "border-6 w-full h-14 p-8 pt-2 pb-2 text-base text-center rounded-lg text-light-grayish-blue bg-veryy-dark-grayish-blue border-dark-grayish-blue"
 			                :
-			                    "border-6 w-full h-14 p-8 pt-2 pb-2 text-3xl text-center rounded-lg border-white"} 
+			                    "border-6 w-full h-14 p-8 pt-2 pb-2 text-base text-center rounded-lg border-white"} 
 			            type="text" placeholder="Create a new todo.." value={inputText}
 			            onChange={(e) => {setInputText(e.target.value)}} onKeyPress={handleSubmit}
 			        />
